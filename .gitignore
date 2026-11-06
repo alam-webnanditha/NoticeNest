@@ -1,0 +1,25 @@
+# Environment variables and secrets
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build files
+frontend/dist/
+backend/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Python environments
+.venv/
+venv/
+
+# System files
+.DS_Store
+Thumbs.db
