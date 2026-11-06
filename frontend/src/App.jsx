@@ -1,5 +1,9 @@
+
 import { useEffect, useState } from 'react';
 import './App.css';
+
+// Backend API URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 // Helper function to check if notice date has passed
 const isDateExpired = (dateValue) => {
@@ -42,7 +46,7 @@ function App() {
   const fetchNotices = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/notices');
+      const response = await fetch(`${API_BASE_URL}/api/notices`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch notices');
@@ -62,7 +66,7 @@ function App() {
   useEffect(() => {
     let isMounted = true;
 
-    fetch('http://localhost:5000/api/notices')
+    fetch(`${API_BASE_URL}/api/notices`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch notices');
         return res.json();
@@ -125,7 +129,7 @@ function App() {
 
     try {
       setSubmitting(true);
-      const response = await fetch('http://localhost:5000/api/notices', {
+      const response = await fetch(`${API_BASE_URL}/api/notices`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -167,11 +171,14 @@ function App() {
   // Toggle verification status
   const handleToggleVerify = async (id, currentVerified) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/notices/${id}/verify`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ verified: !currentVerified })
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/notices/${id}/verify`,
+        {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ verified: !currentVerified })
+        }
+      );
 
       if (!response.ok) {
         throw new Error('Failed to update verification status');
